@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Inter, sans-serif, system-ui;
+  background-color: white;
+  color: black;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
