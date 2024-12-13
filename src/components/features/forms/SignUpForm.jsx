@@ -9,11 +9,11 @@ export default function SignUpForm() {
     e.preventDefault();
     const formData = parseFormData(e.target);
 
-    signUp(
+    signUp({
       formData,
-      () => navigate('/login'),
-      (err) => console.log(err)
-    );
+      onSuccess: () => navigate('/login'),
+      onFail: (err) => console.log(err),
+    });
   };
 
   return (

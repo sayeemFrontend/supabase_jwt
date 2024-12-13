@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { logout } from '@/apis/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -26,9 +26,16 @@ export default function Navbar() {
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/admin')}>
+            Admin
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/editor')}>
+            Editor
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/')}>
+            Home
+          </DropdownMenuItem>
+
           <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

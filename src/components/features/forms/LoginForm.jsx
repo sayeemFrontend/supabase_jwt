@@ -1,18 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { parseFormData } from '../../../utils/utils';
 import { signIn } from '../../../apis/auth';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const { setAuth } = useAuth();
+
+  const handleSuccess = (response) => {
+    setAuth(response);
+    navigate('/');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = parseFormData(e.target);
-    signIn(
-      formData,
-      () => navigate('/'),
-      (err) => console.log(err)
-    );
+    await signIn({ formData, onSuccess: handleSuccess });
   };
 
   return (
