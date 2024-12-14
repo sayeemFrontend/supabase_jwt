@@ -13,16 +13,19 @@ class Cookie {
     return this.cookies[key];
   };
   setCooke = (key, value, expires) => {
-    // const now = new Date().getTime() / 1000;
     const exp = new Date(expires * 1000);
     document.cookie = `${key}=${value}; expires=${exp}`;
-    return undefined;
+    return { key: value };
   };
 
-  clearCooke(keys = ['token', 'refresh_token']) {
+  removeCooke(keys = ['token', 'refresh_token']) {
     keys.forEach((key) => {
       this.setCooke(key, '', 0);
     });
+  }
+  clear() {
+    this.removeCooke(Object.keys(this.cookies));
+    return this.cookies;
   }
 }
 export const cookeStorage = new Cookie();

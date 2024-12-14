@@ -1,4 +1,3 @@
-import { GoPerson } from 'react-icons/go';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,12 +6,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { logout } from '@/apis/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const handleLogout = () => logout(() => navigate('/login'));
+  const { setAuth } = useAuth();
+
+  const handleLogout = () => {
+    setAuth({});
+    navigate('/login');
+  };
   return (
     <nav className="flex justify-end">
       <DropdownMenu>

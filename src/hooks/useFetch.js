@@ -1,27 +1,26 @@
-import axios from '@/apis/axios';
 import { useEffect, useState } from 'react';
+import useRefreshAxios from './useRefreshAxios';
 
-export default function useFetch({
-  end_point = '',
-  method = 'get',
-  body = {},
-}) {
-  const [data, updateData] = useState({
+export default function useFetch(end_point = '', config = {}) {
+  const axiosInstance = useRefreshAxios();
+
+  const [response, updateResponse] = useState({
     isError: null,
-    response: {},
+    data: {},
     isLoading: true,
   });
 
   const fetchData = async () => {
     try {
-      const response = await axios[method](end_point, body);
-      updateData((prev) => ({
+      const { data } = await axiosInstance(end_point, config);
+      updateResponse((prev) => ({
         ...prev,
-        isLoading: false,
-        response: response.data,
+        data: data,
       }));
     } catch (err) {
-      console.log(err);
+      updateResponse((prev) => ({ ...prev, isError: err.response }));
+    } finally {
+      updateResponse((prev) => ({ ...prev, isLoading: false }));
     }
   };
 
@@ -29,5 +28,5 @@ export default function useFetch({
     fetchData();
   }, []);
 
-  return { ...data };
+  return { ...response };
 }
